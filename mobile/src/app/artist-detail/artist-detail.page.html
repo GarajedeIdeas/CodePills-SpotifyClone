@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ artist?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+@if(artist){
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{artist.name}}</ion-card-title>
+      <ion-card-subtitle>{{artist.genre}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>{{artist.bio}}</p>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            <h2>Canciones</h2>
+          </ion-label>
+        </ion-list-header>
+        @for (song of artist.songs; track song.id) {
+        <ion-item lines="full">
+          <ion-label>
+            <h2>{{song.title}}</h2>
+            <h3>{{song.album}}</h3>
+            <p>{{song.releaseDate | date}}</p>
+            <audio class="ion-margin-top" preload="metadata" controls>
+              <source [src]="song.cloudinarySecureUrl" type="audio/mpeg">
+            </audio>
+          </ion-label>
+        </ion-item>
+        }@empty {
+        <ion-item lines="none">
+          <ion-label>No hay canciones para este artista</ion-label>
+        </ion-item>
+        }
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>
+}
